@@ -26,10 +26,12 @@ list_products_ <- function(dataset) {
 
     df <- data.frame(raw = links)
     df$epoch <- sapply(df$raw, FUN = function(x) {
-        strsplit(x, "_")[[1]][4] %>% substring(2, )
+        stringr::str_split_1(x, "_") %>%
+            .[grepl("^[A-Z]{1}\\d{4}([A-Z]{3})?$", .)] %>%
+            substring(2, 5)
     })
     df$resolution <- sapply(df$raw, FUN = function(x) {
-        strsplit(x, "_")[[1]] %>%
+        stringr::str_split_1(x, "_") %>%
             tail(1)
     })
     df %<>% tibble::rownames_to_column("ID")
