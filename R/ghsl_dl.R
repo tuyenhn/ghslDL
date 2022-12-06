@@ -44,12 +44,14 @@ ghsl_dl_ <- function(dataset, point) {
         rowcol["col"]
     )
 
-    fname <- utils::tail(stringr::str_split(product_url, "/")[[1]], 1)
+    fname <- utils::tail(stringr::str_split_1(product_url, "/"), 1)
+    fpath <- paste(getwd(), fname, sep = "/")
     httr::GET(
         product_url,
-        httr::write_disk(paste0(getwd(), "/", fname)),
+        httr::write_disk(fpath),
         httr::progress()
     )
+    cat(sprintf("Download completed\nFile located at: %s", fpath))
 }
 
 #' Helper function, convert inputted sfc_POINT to GHSL's tile row and column
