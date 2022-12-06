@@ -5,15 +5,18 @@
 \title{GHSL downloader, helps download raster with specified dataset, product and
 spatial point}
 \usage{
-ghsl_dl(dataset, point)
+ghsl_dl(dataset, point, load = FALSE)
 }
 \arguments{
 \item{dataset}{String - dataset name}
 
 \item{point}{An \code{sf} point}
+
+\item{load}{Logical - default is \code{FALSE}, if \code{TRUE} a \code{stars} raster is
+loaded after download and returned}
 }
 \value{
-The download server response after downloaded
+Nothing. If \code{load=TRUE}, raster \code{stars} object
 }
 \description{
 GHSL downloader, helps download raster with specified dataset, product and

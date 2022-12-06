@@ -3,26 +3,31 @@
 #'
 #' @param dataset String - dataset name
 #' @param point An `sf` point
+#' @param load Logical - default is `FALSE`, if `TRUE` a `stars` raster is
+#' loaded after download and returned
 #'
-#' @return The download server response after downloaded
+#' @return Nothing. If `load=TRUE`, raster `stars` object
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
 #' }
-ghsl_dl <- function(dataset, point) {
+ghsl_dl <- function(dataset, point, load = FALSE) {
     if (!(dataset %in% datasets$names)) {
         stop("`dataset` must be in `list_datasets()`", call. = FALSE)
     }
     if (class(point)[1] != "sfc_POINT") {
         stop("`point` must be of class `sfc_POINT`", call. = FALSE)
     }
+    if (!is.logical(load)) {
+        stop("`load` must be of class `logical`", call. = FALSE)
+    }
 
-    ghsl_dl_(dataset = dataset, point = point)
+    ghsl_dl_(dataset = dataset, point = point, load = load)
 }
 
-ghsl_dl_ <- function(dataset, point) {
+ghsl_dl_ <- function(dataset, point, load) {
     product_df <- ghslDL::list_products(dataset)
     cat(sprintf("Available products for %s:\n", dataset))
     print(product_df, row.names = FALSE)
@@ -52,6 +57,19 @@ ghsl_dl_ <- function(dataset, point) {
         httr::progress()
     )
     cat(sprintf("Download completed\nFile located at: %s", fpath))
+
+    if (load) {
+        dir <- stringr::str_split_1(fname, "\\.")[1]
+        cat(sprintf("Extracting to %s\n", dir))
+        utils::unzip(fname, exdir = dir)
+        r <- stars::read_stars(
+            paste(
+                getwd(), dir, paste(dir, "tif", sep = "."),
+                sep = "/"
+            )
+        )
+        return(r)
+    }
 }
 
 #' Helper function, convert inputted sfc_POINT to GHSL's tile row and column
