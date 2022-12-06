@@ -1,0 +1,28 @@
+Type: Package
+Package: ghslDL
+Title: Downloader for GHSL datasets
+Version: 0.1.0
+Author: Tuyen Huynh
+Maintainer: Tuyen Huynh <tuyenhn@oucru.org>
+Description: Downloader for GHSL datasets and products. Requires spatial
+    point for tile-based download.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10)
+Imports: 
+    cli,
+    glue,
+    httr,
+    lifecycle,
+    magrittr,
+    rlang,
+    sf,
+    stringr,
+    tibble,
+    utils,
+    withr,
+    xml2
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.2
