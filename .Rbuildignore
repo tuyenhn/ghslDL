@@ -4,3 +4,6 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^LICENSE\.md$
+
+^\.github$
+^\.vscode$
