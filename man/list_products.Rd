@@ -4,10 +4,13 @@
 \alias{list_products}
 \title{List available products within chosen dataset}
 \usage{
-list_products(dataset)
+list_products(dataset, cache = TRUE)
 }
 \arguments{
 \item{dataset}{String - GHSL dataset name}
+
+\item{cache}{Logical - default is \code{TRUE}, enables HTTP request caching with
+\code{httpcache}. If \code{FALSE}, uncached request.}
 }
 \value{
 Dataframe - products available for download within chosen dataset

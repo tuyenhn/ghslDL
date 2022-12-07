@@ -3,27 +3,36 @@
 #'
 #' @param dataset String - dataset name
 #' @param point An `sf` point
+#' @param cache Logical - default is `TRUE`, enables HTTP request caching with
+#' `httpcache`. If `FALSE`, uncached request.
 #'
-#' @return The download server response after downloaded
+#' @return Nothing...
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
 #' }
-ghsl_dl <- function(dataset, point) {
+ghsl_dl <- function(dataset, point, overwrite = FALSE, cache = TRUE) {
     if (!(dataset %in% datasets$names)) {
         stop("`dataset` must be in `list_datasets()`", call. = FALSE)
     }
     if (class(point)[1] != "sfc_POINT") {
         stop("`point` must be of class `sfc_POINT`", call. = FALSE)
     }
+    if (!is.logical(cache)) {
+        stop("`cache` must be of class `logical`", call. = FALSE)
+    }
 
-    ghsl_dl_(dataset = dataset, point = point)
+    ghsl_dl_(
+        dataset = dataset,
+        point = point,
+        cache = cache
+    )
 }
 
-ghsl_dl_ <- function(dataset, point) {
-    product_df <- ghslDL::list_products(dataset)
+ghsl_dl_ <- function(dataset, point, overwrite, cache) {
+    product_df <- ghslDL::list_products(dataset, cache)
     cat(sprintf("Available products for %s:\n", dataset))
     print(product_df, row.names = FALSE)
 
@@ -51,7 +60,7 @@ ghsl_dl_ <- function(dataset, point) {
         httr::write_disk(fpath),
         httr::progress()
     )
-    cat(sprintf("Download completed\nFile located at: %s", fpath))
+    cat(sprintf("Download completed\nFile located at: %s\n", fpath))
 }
 
 #' Helper function, convert inputted sfc_POINT to GHSL's tile row and column
