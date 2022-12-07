@@ -22,7 +22,7 @@ downloader to overwrite existing downloaded files}
 \code{httpcache}. If \code{FALSE}, uncached request.}
 }
 \value{
-Nothing. If \code{load=TRUE}, raster \code{stars} object
+If \code{load=TRUE}, raster \code{stars} object. Else nothing.
 }
 \description{
 GHSL downloader, helps download raster with specified dataset, product and
@@ -30,6 +30,6 @@ spatial point
 }
 \examples{
 \dontrun{
-ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
+ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs = 4326))
 }
 }

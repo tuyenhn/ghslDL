@@ -3,7 +3,7 @@
 \name{get_row_col_}
 \alias{get_row_col_}
 \title{Helper function, convert inputted sfc_POINT to GHSL's tile row and column
-NB: Not intended for users}
+NB: This function is not intended for users}
 \usage{
 get_row_col_(point)
 }
@@ -15,5 +15,5 @@ A row and column vector
 }
 \description{
 Helper function, convert inputted sfc_POINT to GHSL's tile row and column
-NB: Not intended for users
+NB: This function is not intended for users
 }

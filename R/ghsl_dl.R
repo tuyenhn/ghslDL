@@ -10,12 +10,12 @@
 #' @param overwrite Logical - default is `FALSE`, if `TRUE` allows the
 #' downloader to overwrite existing downloaded files
 #'
-#' @return Nothing. If `load=TRUE`, raster `stars` object
+#' @return If `load=TRUE`, raster `stars` object. Else nothing.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
+#' ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs = 4326))
 #' }
 ghsl_dl <- function(dataset, point, load = FALSE, overwrite = FALSE, cache = TRUE) {
     if (!(dataset %in% datasets$names)) {
@@ -65,7 +65,7 @@ ghsl_dl_ <- function(dataset, point, load, overwrite, cache) {
         rowcol["col"]
     )
 
-    fname <- utils::tail(stringr::str_split_1(product_url, "/"), 1)
+    fname <- tail(stringr::str_split_1(product_url, "/"), 1)
     fpath <- paste(getwd(), fname, sep = "/")
     httr::GET(
         product_url,
@@ -89,7 +89,7 @@ ghsl_dl_ <- function(dataset, point, load, overwrite, cache) {
 }
 
 #' Helper function, convert inputted sfc_POINT to GHSL's tile row and column
-#' NB: Not intended for users
+#' NB: This function is not intended for users
 #'
 #' @param point An `sfc_POINT` object
 #'
