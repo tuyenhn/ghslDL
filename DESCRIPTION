@@ -17,6 +17,7 @@ Imports:
     magrittr,
     rlang,
     sf,
+    stars,
     stringr,
     tibble,
     utils,

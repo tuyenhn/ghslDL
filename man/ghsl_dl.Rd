@@ -5,12 +5,15 @@
 \title{GHSL downloader, helps download raster with specified dataset, product and
 spatial point}
 \usage{
-ghsl_dl(dataset, point, overwrite = FALSE, cache = TRUE)
+ghsl_dl(dataset, point, load = FALSE, overwrite = FALSE, cache = TRUE)
 }
 \arguments{
 \item{dataset}{String - dataset name}
 
 \item{point}{An \code{sf} point}
+
+\item{load}{Logical - default is \code{FALSE}, if \code{TRUE} a \code{stars} raster is
+loaded after download and returned}
 
 \item{overwrite}{Logical - default is \code{FALSE}, if \code{TRUE} allows the
 downloader to overwrite existing downloaded files}
@@ -19,7 +22,7 @@ downloader to overwrite existing downloaded files}
 \code{httpcache}. If \code{FALSE}, uncached request.}
 }
 \value{
-The download server response after downloaded
+If \code{load=TRUE}, raster \code{stars} object. Else nothing.
 }
 \description{
 GHSL downloader, helps download raster with specified dataset, product and
@@ -27,6 +30,6 @@ spatial point
 }
 \examples{
 \dontrun{
-ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
+ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs = 4326))
 }
 }
