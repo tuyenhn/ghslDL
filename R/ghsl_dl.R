@@ -3,10 +3,12 @@
 #'
 #' @param dataset String - dataset name
 #' @param point An `sf` point
+#' @param cache Logical - default is `TRUE`, enables HTTP request caching with
+#' `httpcache`. If `FALSE`, uncached request.
 #' @param load Logical - default is `FALSE`, if `TRUE` a `stars` raster is
 #' loaded after download and returned
-#' @param overwrite Logical - default is `FALSE`, if `TRUE` allows the downloader
-#' to overwrite existing downloaded files
+#' @param overwrite Logical - default is `FALSE`, if `TRUE` allows the
+#' downloader to overwrite existing downloaded files
 #'
 #' @return Nothing. If `load=TRUE`, raster `stars` object
 #' @export
@@ -15,7 +17,7 @@
 #' \dontrun{
 #' ghsl_dl("GHS-BUILT-S", sf::st_sfc(sf::st_point(c(106.6297, 10.8231)), crs=4326))
 #' }
-ghsl_dl <- function(dataset, point, load = FALSE, overwrite = FALSE) {
+ghsl_dl <- function(dataset, point, load = FALSE, overwrite = FALSE, cache = TRUE) {
     if (!(dataset %in% datasets$names)) {
         stop("`dataset` must be in `list_datasets()`", call. = FALSE)
     }
@@ -28,17 +30,21 @@ ghsl_dl <- function(dataset, point, load = FALSE, overwrite = FALSE) {
     if (!is.logical(overwrite)) {
         stop("`overwrite` must be of class `logical`", call. = FALSE)
     }
+    if (!is.logical(cache)) {
+        stop("`cache` must be of class `logical`", call. = FALSE)
+    }
 
     ghsl_dl_(
         dataset = dataset,
         point = point,
         load = load,
-        overwrite = overwrite
+        overwrite = overwrite,
+        cache = cache
     )
 }
 
-ghsl_dl_ <- function(dataset, point, load, overwrite) {
-    product_df <- ghslDL::list_products(dataset)
+ghsl_dl_ <- function(dataset, point, load, overwrite, cache) {
+    product_df <- ghslDL::list_products(dataset, cache)
     cat(sprintf("Available products for %s:\n", dataset))
     print(product_df, row.names = FALSE)
 
@@ -66,7 +72,7 @@ ghsl_dl_ <- function(dataset, point, load, overwrite) {
         httr::write_disk(fpath, overwrite = overwrite),
         httr::progress()
     )
-    cat(sprintf("Download completed\nFile located at: %s", fpath))
+    cat(sprintf("Download completed\nFile located at: %s\n", fpath))
 
     if (load) {
         dir <- stringr::str_split_1(fname, "\\.")[1]

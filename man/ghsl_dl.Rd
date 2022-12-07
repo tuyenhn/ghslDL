@@ -5,7 +5,7 @@
 \title{GHSL downloader, helps download raster with specified dataset, product and
 spatial point}
 \usage{
-ghsl_dl(dataset, point, load = FALSE, overwrite = FALSE)
+ghsl_dl(dataset, point, load = FALSE, overwrite = FALSE, cache = TRUE)
 }
 \arguments{
 \item{dataset}{String - dataset name}
@@ -15,8 +15,11 @@ ghsl_dl(dataset, point, load = FALSE, overwrite = FALSE)
 \item{load}{Logical - default is \code{FALSE}, if \code{TRUE} a \code{stars} raster is
 loaded after download and returned}
 
-\item{overwrite}{Logical - default is \code{FALSE}, if \code{TRUE} allows the downloader
-to overwrite existing downloaded files}
+\item{overwrite}{Logical - default is \code{FALSE}, if \code{TRUE} allows the
+downloader to overwrite existing downloaded files}
+
+\item{cache}{Logical - default is \code{TRUE}, enables HTTP request caching with
+\code{httpcache}. If \code{FALSE}, uncached request.}
 }
 \value{
 Nothing. If \code{load=TRUE}, raster \code{stars} object
