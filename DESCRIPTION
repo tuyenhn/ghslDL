@@ -12,6 +12,7 @@ Depends:
 Imports: 
     cli,
     glue,
+    httpcache,
     httr,
     lifecycle,
     magrittr,
