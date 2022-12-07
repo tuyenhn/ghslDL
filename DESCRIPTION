@@ -10,7 +10,6 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports: 
-    cli,
     glue,
     httpcache,
     httr,
@@ -21,7 +20,6 @@ Imports:
     stringr,
     tibble,
     utils,
-    withr,
     xml2
 Encoding: UTF-8
 LazyData: true
